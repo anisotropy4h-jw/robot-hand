@@ -138,35 +138,6 @@ figcaption{margin-top:11px;font-family:var(--mono);font-size:12px;line-height:1.
 .proof{font-size:13px;line-height:1.6;padding-left:11px;border-left:2px solid var(--rule)}
 .proof b{font-weight:600;color:var(--ink)}
 
-/* ---------- control stack ---------- */
-.stack{border-top:1px solid var(--rule)}
-.lvl{display:grid;grid-template-columns:84px 1fr 128px;gap:20px;align-items:baseline;
-  padding:19px 0;border-bottom:1px solid var(--rule)}
-.lvl .id{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--ink)}
-.lvl .body h3{margin-bottom:5px}
-.lvl .body p{font-size:14.5px;color:var(--ink2);margin:0}
-.lvl .st{font-size:12.5px;font-weight:500;text-align:right;font-family:var(--mono)}
-.st.ok{color:var(--wire)}
-.st.wip{color:#8A5B12}
-.st.plan{color:var(--comp)}
-
-/* ---------- lessons ---------- */
-.lessons{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;background:var(--rule);border:1px solid var(--rule);border-radius:2px}
-.lesson{background:var(--panel);padding:clamp(20px,2.6vw,28px)}
-.lesson h3{margin-bottom:9px}
-.lesson p{font-size:14.5px;line-height:1.68;color:var(--ink2)}
-
-/* ---------- ledger ---------- */
-.ledger{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(24px,3vw,36px)}
-.col h3{padding-bottom:9px;margin-bottom:14px;border-bottom:2px solid var(--rule)}
-.col.ok h3{border-bottom-color:var(--wire)}
-.col.wip h3{border-bottom-color:#C9821A}
-.col.plan h3{border-bottom-color:var(--comp);opacity:.92}
-.col ul{list-style:none;margin:0;padding:0}
-.col li{font-size:14.5px;line-height:1.6;color:var(--ink2);padding:8px 0 8px 16px;position:relative}
-.col li::before{content:"";position:absolute;left:0;top:15px;width:6px;height:1.5px;background:var(--ink3)}
-.col li b{color:var(--ink);font-weight:600}
-
 /* ---------- stack list ---------- */
 .specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:clamp(22px,3vw,34px)}
 .spec h3{margin-bottom:12px;font-size:15px}
@@ -185,8 +156,6 @@ footer .note{font-size:13px;color:var(--ink3);max-width:60ch;line-height:1.65}
   .shot img{aspect-ratio:4/3;object-position:50% 42%}
   .vids{grid-template-columns:1fr}
   .vid{grid-template-columns:150px 1fr;gap:18px}
-  .lvl{grid-template-columns:64px 1fr;row-gap:6px}
-  .lvl .st{grid-column:2;text-align:left}
 }
 @media (max-width:520px){
   body{font-size:16px}
@@ -417,118 +386,6 @@ footer .note{font-size:13px;color:var(--ink3);max-width:60ch;line-height:1.65}
         </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-<section id="control">
-  <div class="wrap">
-    <div class="shead">
-      <h2>제어 구조</h2>
-      <span class="meta">아래에서 위로 쌓는 순서</span>
-    </div>
-
-    <div class="narrow" style="margin-bottom:30px">
-      <p>사용 중인 서보에는 토크 제어 모드가 없습니다. 그래서 힘을 직접 지령하는 대신, <strong>측정한 힘의 오차로 위치 지령을 밀어내는 어드미턴스 방식</strong>을 씁니다. 위 단계는 아래 단계가 검증된 뒤에만 올립니다.</p>
-    </div>
-
-    <div class="stack">
-      <div class="lvl">
-        <div class="id">L0</div>
-        <div class="body"><h3>서보 내부 위치 루프</h3><p>제조사 펌웨어. 지령 각도를 물리 각도로 만드는 최하단.</p></div>
-        <div class="st ok">동작 확인</div>
-      </div>
-      <div class="lvl">
-        <div class="id">L1</div>
-        <div class="body"><h3>손가락별 어드미턴스 루프</h3><p><span class="mono">Δq = PI(F_ref − F_fsr)</span> — 목표 힘과 실측 힘의 차이만큼 관절 지령을 보정합니다.</p></div>
-        <div class="st wip">통합 중</div>
-      </div>
-      <div class="lvl">
-        <div class="id">L2</div>
-        <div class="body"><h3>목표 힘 추정</h3><p>스티프니스 프로빙으로 물체의 무름 정도를 재고, 슬립이 뜰 때마다 목표 힘을 한 칸씩 올리는 래칫 방식.</p></div>
-        <div class="st plan">설계 완료</div>
-      </div>
-      <div class="lvl">
-        <div class="id">L3</div>
-        <div class="body"><h3>파지 상태 머신</h3><p>접근 → 부하 → 유지 단계 전환. 각 전이 조건은 센서 이벤트로 정의합니다.</p></div>
-        <div class="st plan">설계 완료</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="lessons">
-  <div class="wrap">
-    <div class="shead">
-      <h2>비용을 치르고 알게 된 것</h2>
-      <span class="meta">전부 실측에서 나온 결론</span>
-    </div>
-
-    <div class="lessons">
-      <div class="lesson">
-        <h3>FSR은 경질 배킹 위에서만 힘을 잰다</h3>
-        <p>연질 TPU 셸에 필름을 직접 붙였더니, 누르는 힘이 아니라 필름이 휘는 정도를 읽고 있었습니다. 실리콘 돔 → FSR → 1mm 경질 플레이트 → 셸 순서로 스택을 다시 짰습니다.</p>
-      </div>
-      <div class="lesson">
-        <h3>PVDF는 압력이 아니라 굽힘에 반응한다</h3>
-        <p>단단한 책상 위에서는 아무리 증폭해도 신호가 없었습니다. 종이컵이나 로봇 셸처럼 휘어주는 기판에 붙였을 때만 버스트가 나왔습니다. 증폭기를 손보기 전에 부착면을 먼저 고쳐야 했습니다.</p>
-      </div>
-      <div class="lesson">
-        <h3>맨손으로 얻은 검출 성공은 무효였다</h3>
-        <p>초기에 잘 잡히던 신호의 정체는 인체 정전 결합과 손 떨림이었습니다. 이후로는 도구로만 가진하는 것을 벤치 규칙으로 고정했습니다.</p>
-      </div>
-      <div class="lesson">
-        <h3>파워 쇼트키는 신호 회로에 쓰면 안 된다</h3>
-        <p>보호용으로 넣은 1N5819의 µA급 역방향 누설이 1MΩ 바이어스 저항에 걸려 0.5V에 가까운 DC 오프셋을 만들었습니다. nA급 소신호 다이오드로 교체했습니다.</p>
-      </div>
-      <div class="lesson">
-        <h3>ADC 하나로 두 대역을 못 본다</h3>
-        <p>ADS1115를 멀티플렉싱하면 채널당 실효 샘플레이트가 슬립 진동을 담기에 부족합니다. 저대역과 고대역 경로를 물리적으로 분리했고, WiFi와 충돌하는 ADC2 대신 ADC1을 씁니다.</p>
-      </div>
-      <div class="lesson">
-        <h3>있는 척하는 스펙은 없는 것보다 나쁘다</h3>
-        <p>서보의 load 레지스터는 측정 전류가 아니라 PWM 듀티 프록시입니다. 이걸 힘으로 쓰려던 계획을 접고 외부 센서 + 어드미턴스로 방향을 바꿨습니다.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="status">
-  <div class="wrap">
-    <div class="shead">
-      <h2>지금 어디까지</h2>
-      <span class="meta">2026년 9월 기준</span>
-    </div>
-
-    <div class="ledger">
-      <div class="col ok">
-        <h3>측정으로 확인됨</h3>
-        <ul>
-          <li>서보 <b>8축 캘리브레이션</b> 및 스크립트 파지 시퀀스</li>
-          <li>손 추적 → IK → 실기 <b>텔레오퍼레이션 파이프라인</b></li>
-          <li>FSR 3채널 → ADS1115 → I²C <b>신호 체인 전체</b></li>
-          <li>증폭 후 <b>PVDF 슬립 트랜지언트</b> 관측</li>
-          <li>HX711 로드셀 <b>캘리브레이션 벤치</b> (50g 기준 오차 0.1g 이내)</li>
-        </ul>
-      </div>
-      <div class="col wip">
-        <h3>지금 하는 일</h3>
-        <ul>
-          <li>센서 포트와 서보 포트를 <b>단일 파이썬 루프</b>로 통합</li>
-          <li>FSR <b>ADC–힘 환산 곡선</b> 생성</li>
-          <li>4채널 증폭단 <b>만능기판 이식</b></li>
-          <li>L1 어드미턴스 루프 <b>엔드투엔드 검증</b></li>
-        </ul>
-      </div>
-      <div class="col plan">
-        <h3>설계만 되어 있음</h3>
-        <ul>
-          <li>슬립 임계값 정량 캘리브레이션 및 <b>오검출률 측정</b></li>
-          <li>커스텀 손끝 셸 (FSR 리세스 + 피에조 포켓)</li>
-          <li>L2 목표 힘 추정, L3 파지 상태 머신</li>
-          <li>파지 성공률을 <b>파지창 폭의 함수</b>로 정리</li>
-        </ul>
-      </div>
     </div>
   </div>
 </section>
