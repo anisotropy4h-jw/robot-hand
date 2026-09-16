@@ -186,8 +186,8 @@ footer .note{font-size:13px;color:var(--ink3);max-width:60ch;line-height:1.65}
     <div>
       <h1>Squeeze too hard and it crumples. Too soft and it drops.</h1>
       <p class="lede">
-        An 8-DOF robot hand with force and slip sensors built into the fingertips,
-        <strong>closing the loop on the grip force in between.</strong>
+        An 8-DOF robot hand instrumented with fingertip force and slip sensors,
+        <strong>designed to regulate grasp force through closed-loop feedback.</strong>
         Everything on this page was measured on the physical hardware, not in simulation.
       </p>
       <div class="scope">
@@ -230,7 +230,7 @@ footer .note{font-size:13px;color:var(--ink3);max-width:60ch;line-height:1.65}
 
     <div class="narrow">
       <p>Every object has a force window, <span class="mono">[F_slip, F_damage]</span>. Grip below it and the object slides out; grip above it and the object is destroyed. A human hand finds that band without thinking about it. A robot needs a sensor that reports contact force in real time and a controller that feeds it back.</p>
-      <p>The mission is a <strong>precision grasp on a small paper cup with three fingertip contacts</strong> — thumb, index and middle. Power grasp was ruled out deliberately: caging the object in the palm is form closure, so slip never occurs and the sensor loop has nothing to do. Only a pure friction hold makes the closed loop actually carry the load. An empty paper cup buckles rather than deforms, which makes its window unusually narrow, and that is precisely why it was chosen.</p>
+      <p>The mission is a <strong>precision grasp on a small paper cup with three fingertip contacts</strong> — thumb, index and middle. The empty paper cup was selected because it has a narrow operating range between slip and buckling. A power grasp was intentionally excluded because palm contact can mechanically constrain the object and reduce the role of slip-based feedback.</p>
     </div>
 
     <div class="gw">
@@ -442,7 +442,7 @@ footer .note{font-size:13px;color:var(--ink3);max-width:60ch;line-height:1.65}
     <div class="flinks">
       <a href="https://www.instagram.com/aniso.works/">Instagram · aniso.works</a>
       <a href="https://github.com/YOUR-ID">GitHub</a>
-      <a href="mailto:YOUR-EMAIL">Email</a>
+      <a href="mailto:anisotropy4h@gmail.com">Email</a>
     </div>
     <p class="note">Independent undergraduate project, School of Electrical and Electronic Engineering, Yonsei University. The mechanical design builds on Pollen Robotics' open-source AmazingHand; the sensor front end, firmware and control software are my own. Every video and figure on this page was recorded from the physical setup.</p>
   </div>
@@ -450,3 +450,4 @@ footer .note{font-size:13px;color:var(--ink3);max-width:60ch;line-height:1.65}
 
 </body>
 </html>
+
