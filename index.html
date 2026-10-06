@@ -66,6 +66,10 @@ p:last-child{margin-bottom:0}
 .topbar{border-bottom:1px solid var(--rule);background:rgba(246,247,249,.86);backdrop-filter:blur(6px)}
 .topbar .wrap{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-top:14px;padding-bottom:13px;flex-wrap:wrap}
 .topbar b{font-weight:600;font-size:15px}
+.topbar .crumb{display:inline-flex;align-items:baseline;flex-wrap:wrap;gap:0 10px}
+.topbar .home{border:0;font-size:15px;color:var(--ink3)}
+.topbar .home:hover{color:var(--net)}
+.topbar .sep{color:var(--rule)}
 .topbar .mono{font-size:12.5px;color:var(--ink3);letter-spacing:.02em}
 
 .lang{display:inline-flex;gap:9px;align-items:baseline;margin-left:14px}
@@ -176,7 +180,7 @@ footer .note{font-size:13px;color:var(--ink3);max-width:60ch;line-height:1.65}
 
 <div class="topbar">
   <div class="wrap">
-    <b>촉각 피드백 기반 로봇 손 파지 제어</b>
+    <span class="crumb"><a class="home" href="https://anisotropy4h-jw.github.io/">← Jungwoo Kim</a><span class="sep">/</span><b>촉각 피드백 기반 로봇 손 파지 제어</b></span>
     <span class="mono">aniso.works / 2026<span class="lang"><a href="index.html" aria-current="page">KO</a><a href="en.html">EN</a></span></span>
   </div>
 </div>
@@ -441,8 +445,8 @@ footer .note{font-size:13px;color:var(--ink3);max-width:60ch;line-height:1.65}
   <div class="wrap">
     <div class="flinks">
       <a href="https://www.instagram.com/aniso.works/">Instagram · aniso.works</a>
-      <a href="https://github.com/YOUR-ID">GitHub</a>
-      <a href="mailto:YOUR-EMAIL">이메일</a>
+      <a href="https://anisotropy4h-jw.github.io/">홈페이지</a>
+      <a href="mailto:anisotropy4h@gmail.com">이메일</a>
     </div>
     <p class="note">연세대학교 전기전자공학부 학부 개인 프로젝트. 하드웨어 설계는 Pollen Robotics의 AmazingHand 오픈소스를 기반으로 하며, 센서 프론트엔드·펌웨어·제어 소프트웨어는 직접 작성했습니다. 페이지에 실린 영상과 수치는 모두 실물 장비에서 측정한 것입니다.</p>
   </div>
